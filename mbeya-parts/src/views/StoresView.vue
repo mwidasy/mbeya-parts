@@ -1,49 +1,6 @@
-﻿<template>
+<template>
   <div class="stores-page">
-    <div class="topbar">
-      <RouterLink to="/" class="back-btn"><i class="ti ti-arrow-left" /></RouterLink>
-      <span class="topbar-title">Maduka Yote</span>
-    </div>
-    <div v-if="loading" class="loading">Inapakia...</div>
-    <div v-else class="stores-list">
-      <RouterLink v-for="store in stores" :key="store.id" :to="`/stores/${store.id}`" class="store-item">
-        <div class="store-avatar" :style="{ background: storeColor(store.name) }">{{ initials(store.name) }}</div>
-        <div class="store-info">
-          <div class="store-name">{{ store.name }}</div>
-          <div class="store-meta">{{ store.location || "Mbeya" }}</div>
-        </div>
-        <i class="ti ti-chevron-right store-arrow" />
-      </RouterLink>
-    </div>
-    <div class="bottom-spacer" />
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue"
-import { supabase } from "@/lib/supabase"
-const stores = ref([])
-const loading = ref(true)
-const colors = ["#E85D04","#C1440E","#7C3AED","#0891B2","#059669","#D97706"]
-function storeColor(name) { return colors[name.charCodeAt(0) % colors.length] }
-function initials(name) { return name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase() }
-onMounted(async () => {
-  const { data } = await supabase.from("stores").select("*").eq("is_active", true)
-  stores.value = data || []
-  loading.value = false
-})
 </script>
-<style scoped>
-.stores-page { min-height: 100dvh; background: #f9fafb; }
-.topbar { background: #E85D04; padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
-.back-btn { color: #fff; font-size: 22px; text-decoration: none; }
-.topbar-title { color: #fff; font-size: 16px; font-weight: 700; }
-.loading { text-align: center; padding: 40px; color: #9ca3af; font-size: 13px; }
-.stores-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
-.store-item { display: flex; align-items: center; gap: 12px; background: #fff; border: 0.5px solid #e5e7eb; border-radius: 12px; padding: 12px; text-decoration: none; }
-.store-avatar { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 16px; font-weight: 600; flex-shrink: 0; }
-.store-info { flex: 1; }
-.store-name { font-size: 13px; font-weight: 600; color: #111; }
-.store-meta { font-size: 11px; color: #9ca3af; margin-top: 3px; }
-.store-arrow { color: #d1d5db; font-size: 18px; }
-.bottom-spacer { height: 80px; }
-</style>

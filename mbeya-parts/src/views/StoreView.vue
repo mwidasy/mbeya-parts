@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="store-page">
     <div class="topbar">
       <RouterLink to="/stores" class="back-btn"><i class="ti ti-arrow-left" /></RouterLink>

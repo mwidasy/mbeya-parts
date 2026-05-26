@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="product-page">
     <div class="topbar">
       <button class="back-btn" @click="router.back()"><i class="ti ti-arrow-left" /></button>
